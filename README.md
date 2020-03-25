@@ -20,12 +20,12 @@ You can find more regarding the current features on the app and usage instructio
 Currently the app looks something like this:
 
 <figure>
-<img src="Screenshots/App_HomeScreen.png" alt="Home" style="width:360px;height:640px;">
+<img src="Screenshots/App_HomeScreen.png" alt="Home" style="width:180px;height:320px;">
 <figcaption>Home Screen of App</figcaption>
-<img src="Screenshots/BackPressed.png" alt="BackPressed" style="width:360px;height:640px;">
+<img src="Screenshots/BackPressed.png" alt="BackPressed" style="width:180px;height:320px;">
 <figcaption>When back button is pressed</figcaption>
-<img src="Screenshots/ScreenOveridingAttempt.png" alt="ScreenOveridingAttempt" style="width:360px;height:640px;">
+<img src="Screenshots/ScreenOveridingAttempt.png" alt="ScreenOveridingAttempt" style="width:180px;height:320px;">
 <figcaption>When a dialog tries to casts over the screen (ex. notification bar exapansion, long power button press)</figcaption>
-<img src="Screenshots/VolumeKeyPressed.png" alt="VolumeKeyPressed" style="width:360px;height:640px;">
+<img src="Screenshots/VolumeKeyPressed.png" alt="VolumeKeyPressed" style="width:180px;height:320px;">
 <figcaption>When Volume keys are pressed</figcaption>
 </figure>
