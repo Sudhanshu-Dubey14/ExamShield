@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name=".LockedExamActivity" />
 
+        <service android:name=".KioskService" />
+    </application>
 </manifest>
