@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/kioskmode"
+        android:id="@+id/loginmsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="30dp"
+        android:layout_margin="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/loginmsg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,13 +22,13 @@
 
 
     <Button
-        android:id="@+id/hiddenExitButton"
+        android:id="@+id/startExamButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hiddenBreakoutButton"
+        android:text="@string/startExamButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/kioskmode"/>
+        app:layout_constraintTop_toTopOf="@id/loginmsg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
