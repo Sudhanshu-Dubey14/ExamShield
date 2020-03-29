@@ -22,10 +22,8 @@ Currently the app looks something like this:
 <figure>
 <img src="Screenshots/App_HomeScreen.png" alt="Home" style="width:180px;height:320px;">
 <figcaption>Home Screen of App</figcaption>
-<img src="Screenshots/BackPressed.png" alt="BackPressed" style="width:180px;height:320px;">
-<figcaption>When back button is pressed</figcaption>
-<img src="Screenshots/ScreenOveridingAttempt.png" alt="ScreenOveridingAttempt" style="width:180px;height:320px;">
-<figcaption>When a dialog tries to casts over the screen (ex. notification bar exapansion, long power button press)</figcaption>
-<img src="Screenshots/VolumeKeyPressed.png" alt="VolumeKeyPressed" style="width:180px;height:320px;">
-<figcaption>When Volume keys are pressed</figcaption>
+<img src="Screenshots/ScreenPinRequest.png" alt="ScreenPinRequest" style="width:180px;height:320px;">
+<figcaption>App asking permission to pin the screen</figcaption>
+<img src="Screenshots/ExamScreen.png" alt="ExamScreen" style="width:180px;height:320px;">
+<figcaption>Exam Screen</figcaption>
 </figure>
