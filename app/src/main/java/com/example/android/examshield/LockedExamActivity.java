@@ -1,7 +1,10 @@
 package com.example.android.examshield;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,7 @@ public class LockedExamActivity extends AppCompatActivity {
     private final List blockedKeys = new ArrayList(Arrays.asList(KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP));
     TextView kioskWindow;
     private Button hiddenExitButton;
+    boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +48,18 @@ public class LockedExamActivity extends AppCompatActivity {
                 } else {
                     kioskWindow.setText("Kiosk Mode is off");
                 }
+                stopService(new Intent(LockedExamActivity.this, KioskService.class));
                 stopLockTask();
-                Toast.makeText(getApplicationContext(), "You can leave the app now!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Exiting the app!", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        finish();
     }
 
     /*
@@ -75,10 +87,23 @@ public class LockedExamActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (!hasFocus) {
-            Toast.makeText(getApplicationContext(), "Can't take focus from this window!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Can't take focus from this window!!", Toast.LENGTH_SHORT).show();
             // Close every kind of system dialog
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
+        } else if (firstTime) {
+            Log.i("LockedActivity", "Activity has focus");
+            ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            assert activityManager != null;
+            if (activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_PINNED) {
+                Log.i("LockedActivity", "App Pinned, launching service");
+                startService(new Intent(LockedExamActivity.this, KioskService.class));
+            } else {
+                Log.i("LockedActivity", "App not Pinned, restarting MainActivity");
+                startActivity(new Intent(LockedExamActivity.this, MainActivity.class));
+                finish();
+            }
+            firstTime = false;
         }
     }
 
