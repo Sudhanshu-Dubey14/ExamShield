@@ -1,12 +1,16 @@
 package com.example.android.examshield;
 
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.RequiresApi;
 
 public class KioskService extends Service {
 
@@ -45,40 +49,30 @@ public class KioskService extends Service {
                 stopSelf();
             }
         });
-
         thread.start();
         return Service.START_NOT_STICKY;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void handleKioskMode() {
         // is Kiosk Mode active?
         if (PrefUtils.isKioskModeActive(context)) {
-            // is App in background?
-           /* if(isInBackground()) {
-                restoreApp(); // restore!
-            }*/
+            ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            assert activityManager != null;
+            if (activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_NONE) {
+                Log.i(TAG, "App is not Pinned, relauncing main");
+                Intent intent = new Intent(KioskService.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Log.i(TAG, "stopping self");
+                stopSelf();
+            } else if (activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_PINNED) {
+                Log.i(TAG, "App is Pinned");
+            }
         }
     }
 
-    /*
-    private boolean isInBackground() {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-
-        assert activityManager != null;
-        List<ActivityManager.RunningTaskInfo> taskInfo = activityManager.getRunningTasks(1);
-        ComponentName componentInfo = taskInfo.get(0).topActivity;
-        assert componentInfo != null;
-        return (!context.getApplicationContext().getPackageName().equals(componentInfo.getPackageName()));
-    }
-
-    private void restoreApp() {
-        // Restart activity
-        Intent i = new Intent(context, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Log.i(TAG, "Restoring app");
-        context.startActivity(i);
-    }
- */
     @Override
     public IBinder onBind(Intent intent) {
         return null;
