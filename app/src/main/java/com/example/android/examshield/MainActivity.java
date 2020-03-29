@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,12 +30,18 @@ public class MainActivity extends AppCompatActivity {
         startExamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(MainActivity.this, KioskService.class));
-                startLockTask();
-                //TODO: check if screen is pinned or not
                 Intent intent = new Intent(MainActivity.this, LockedExamActivity.class);
+                startLockTask();
                 startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Toast.makeText(getApplicationContext(), "Finishing everything!!", Toast.LENGTH_SHORT).show();
+        finishAndRemoveTask();
     }
 }
