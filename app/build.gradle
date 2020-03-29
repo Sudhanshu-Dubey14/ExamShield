@@ -30,6 +30,8 @@ android {
         exclude 'META-INF/androidx.savedstate_savedstate.version'
         exclude 'META-INF/androidx.interpolator_interpolator.version'
         exclude 'META-INF/androidx.activity_activity.version'
+        exclude 'META-INF/androidx.appcompat_appcompat.version'
+        exclude 'META-INF/androidx.viewpager_viewpager.version'
     }
 }
 
