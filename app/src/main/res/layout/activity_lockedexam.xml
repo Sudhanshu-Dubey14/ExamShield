@@ -30,16 +30,91 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:layout_weight="0.01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
 
-    <Button
-        android:id="@+id/hiddenExitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exitButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/kioskmode" />
+
+                <RelativeLayout
+                    android:id="@+id/url_go_progressbar_relLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/web_address_edit_text"
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toLeftOf="@+id/go_button"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="Enter URL"
+                        android:inputType="textWebEditText"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/go_button"
+                        android:layout_width="45dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="4dp"
+                        android:layout_alignTop="@+id/web_address_edit_text"
+                        android:text="GO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/web_address_edit_text"
+                        android:layout_weight="0.05" />
+                </RelativeLayout>
+
+        </LinearLayout>
+
+        <WebView
+            android:layout_weight="0.98"
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </WebView>
+
+        <LinearLayout
+            android:layout_weight="0.01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <Button
+                android:id="@+id/hiddenExitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exitButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/kioskmode" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
