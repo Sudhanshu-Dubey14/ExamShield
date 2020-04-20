@@ -7,29 +7,6 @@
     android:keepScreenOn="true"
     tools:context=".LockedExamActivity">
 
-    <TextView
-        android:id="@+id/browsermsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:paddingLeft="8dp"
-        android:text="@string/browsermsg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/kioskmode"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/kioskmode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:paddingLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -43,8 +20,6 @@
             android:layout_weight="0.01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-
 
                 <RelativeLayout
                     android:id="@+id/url_go_progressbar_relLayout"
@@ -108,13 +83,9 @@
                 android:text="@string/exitButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/kioskmode" />
-
+                app:layout_constraintRight_toRightOf="parent" />
 
         </LinearLayout>
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
