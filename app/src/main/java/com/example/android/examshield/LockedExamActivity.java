@@ -2,45 +2,34 @@ package com.example.android.examshield;
 
 //import for browser start
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import java.io.IOException;
 
-//import for browser end
-
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
+//import for browser end
 
 public class LockedExamActivity extends AppCompatActivity {
     private final List blockedKeys = new ArrayList(Arrays.asList(KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP));
-    TextView kioskWindow;
     private Button hiddenExitButton;
     boolean firstTime = true;
 
@@ -53,18 +42,10 @@ public class LockedExamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD); //disables lock screen
+        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_lockedexam);
-        kioskWindow = findViewById(R.id.kioskmode);
         // every time someone enters the kiosk mode, set the flag true
         PrefUtils.setKioskModeActive(true, getApplicationContext());
-        if (PrefUtils.isKioskModeActive(getApplicationContext())) {
-            kioskWindow.setText("Kiosk Mode is on");
-        } else {
-            kioskWindow.setText("Kiosk Mode is off");
-        }
 
         hiddenExitButton = findViewById(R.id.hiddenExitButton);
         hiddenExitButton.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +53,6 @@ public class LockedExamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Break out!
                 PrefUtils.setKioskModeActive(false, getApplicationContext());
-                if (PrefUtils.isKioskModeActive(getApplicationContext())) {
-                    kioskWindow.setText("Kiosk Mode is on");
-                } else {
-                    kioskWindow.setText("Kiosk Mode is off");
-                }
                 stopService(new Intent(LockedExamActivity.this, KioskService.class));
                 stopLockTask();
                 Toast.makeText(getApplicationContext(), "Exiting the app!", Toast.LENGTH_SHORT).show();
@@ -84,15 +60,15 @@ public class LockedExamActivity extends AppCompatActivity {
             }
         });
 
-        editText = (EditText) findViewById(R.id.web_address_edit_text);
+        editText = findViewById(R.id.web_address_edit_text);
 
-        goButton = (Button)findViewById(R.id.go_button);
+        goButton = findViewById(R.id.go_button);
 
-        homeButton = (ImageButton) findViewById(R.id.home);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        homeButton = findViewById(R.id.home);
+        progressBar = findViewById(R.id.progress_bar);
         progressBar.setMax(100);
         progressBar.setVisibility(View.VISIBLE);
-        webView = (WebView) findViewById(R.id.web_view);
+        webView = findViewById(R.id.web_view);
 
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
@@ -146,8 +122,6 @@ public class LockedExamActivity extends AppCompatActivity {
 
 
     }
-
-
 
     @Override
     public void onStop() {
