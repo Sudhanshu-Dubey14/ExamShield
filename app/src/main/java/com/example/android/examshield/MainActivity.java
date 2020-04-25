@@ -31,14 +31,17 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clip);
         msgWindow = findViewById(R.id.loginmsg);
         startExamButton = findViewById(R.id.startExamButton);
+
+        Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+
         startExamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (policyManager.isAdminActive()) {
-                    Intent intent = new Intent(MainActivity.this, LockedExamActivity.class);
-                    startLockTask();
+                    Intent intent = new Intent(MainActivity.this, ForecastActivity.class);
                     startActivity(intent);
                     finish();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
                 }
