@@ -34,10 +34,10 @@ public class LockedExamActivity extends AppCompatActivity {
     boolean firstTime = true;
 
     WebView webView;
-    EditText editText;
+
     ProgressBar progressBar;
     ImageButton back, forward, stop, refresh, homeButton;
-    Button goButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +60,6 @@ public class LockedExamActivity extends AppCompatActivity {
             }
         });
 
-        editText = findViewById(R.id.web_address_edit_text);
-
-        goButton = findViewById(R.id.go_button);
-
-        homeButton = findViewById(R.id.home);
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setMax(100);
         progressBar.setVisibility(View.VISIBLE);
@@ -96,30 +91,12 @@ public class LockedExamActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
+       }
 
         webView.setWebViewClient(new MyWebViewClient());
-        goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    if(!NetworkState.connectionAvailable(LockedExamActivity.this)){
-                        Toast.makeText(LockedExamActivity.this, "please check your internet", Toast.LENGTH_SHORT).show();
-                    }else {
-
-                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                        webView.loadUrl("https://" + editText.getText().toString());
-                        editText.setText("");
-                    }
-
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        Intent intent =getIntent();
+        String url=intent.getStringExtra("url");
+        webView.loadUrl(url);
 
     }
 
