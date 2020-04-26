@@ -2,10 +2,6 @@ package com.example.android.examshield;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.content.res.Resources;
-
-import android.view.Gravity;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,23 +21,17 @@ public class ForecastActivity extends AppCompatActivity implements FetchDataCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        // check internet connection
-//        if(!utility.checkInternetConnection(this)) {
-//            utility.showNoConnectionDialog(this);
-//        }
-
         super.onCreate(savedInstanceState);
 
         // fetch server data only once
         if(ForecastActivity.data == null) {
             // automatically calls the renderData function
-            Toast.makeText(getApplicationContext(), " fun request", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Taking you to Exam. Be Ready", Toast.LENGTH_LONG).show();
 
             new FetchData("https://shivcharanmt.gdy.club/data.php", this).execute();
        }
         else {
             renderData();
-
         }
     }
 

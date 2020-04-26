@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -86,18 +84,17 @@ public class LockedExamActivity extends AppCompatActivity {
                     }
                     if (newProgress == 100) {
                         progressBar.setVisibility(ProgressBar.GONE);
-                    }else{
+                    } else {
                         progressBar.setVisibility(ProgressBar.VISIBLE);
                     }
                 }
             });
-       }
+        }
 
         webView.setWebViewClient(new MyWebViewClient());
-        Intent intent =getIntent();
-        String url=intent.getStringExtra("url");
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
         webView.loadUrl(url);
-
     }
 
     @Override
@@ -106,26 +103,6 @@ public class LockedExamActivity extends AppCompatActivity {
         finish();
     }
 
-    /*
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_HOME)) {
-            Log.i("key", "home");
-            Toast.makeText(getApplicationContext(),"Home pressed!!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Toast.makeText(getApplicationContext(),"back pressed!!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if ((keyCode == KeyEvent.KEYCODE_MENU)) {
-            Log.i("key", "menu");
-            Toast.makeText(getApplicationContext(),"menu pressed!!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
-    }
-    */
     /*Get's called if anything (mostly dialogs) get's over the activity, then it closes all dialogs */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
