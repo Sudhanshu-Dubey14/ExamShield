@@ -8,9 +8,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.concurrent.TimeUnit;
-
 import androidx.annotation.RequiresApi;
+
+import java.util.concurrent.TimeUnit;
 
 public class KioskService extends Service {
 
@@ -34,7 +34,7 @@ public class KioskService extends Service {
         running = true;
         context = this;
 
-        // start a thread that periodically checks if your app is in the foreground
+        // start a thread that periodically checks if screen is pinned
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,11 +60,8 @@ public class KioskService extends Service {
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             assert activityManager != null;
             if (activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_NONE) {
-                Log.i(TAG, "App is not Pinned, relauncing main");
-                Intent intent = new Intent(KioskService.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                Log.i(TAG, "App is not Pinned, exiting app");
+                sendBroadcast(new Intent("NotPinned"));
                 Log.i(TAG, "stopping self");
                 stopSelf();
             } else if (activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_PINNED) {

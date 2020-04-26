@@ -3,17 +3,19 @@ package com.example.android.examshield;
 //import for browser start
 
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,33 +32,28 @@ public class LockedExamActivity extends AppCompatActivity {
     private final List blockedKeys = new ArrayList(Arrays.asList(KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP));
     private Button hiddenExitButton;
     boolean firstTime = true;
-
     WebView webView;
-
     ProgressBar progressBar;
-    ImageButton back, forward, stop, refresh, homeButton;
 
+    private final BroadcastReceiver getDestroyed = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PrefUtils.setKioskModeActive(false, getApplicationContext());
+            stopLockTask();
+            Toast.makeText(getApplicationContext(), "Exiting the app!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_lockedexam);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD); //disables lock screen
+        registerReceiver(getDestroyed, new IntentFilter("NotPinned"));
+
         // every time someone enters the kiosk mode, set the flag true
         PrefUtils.setKioskModeActive(true, getApplicationContext());
-
-        hiddenExitButton = findViewById(R.id.hiddenExitButton);
-        hiddenExitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Break out!
-                PrefUtils.setKioskModeActive(false, getApplicationContext());
-                stopService(new Intent(LockedExamActivity.this, KioskService.class));
-                stopLockTask();
-                Toast.makeText(getApplicationContext(), "Exiting the app!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
 
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setMax(100);
@@ -97,18 +94,23 @@ public class LockedExamActivity extends AppCompatActivity {
         webView.loadUrl(url);
     }
 
+    /*
     @Override
     public void onStop() {
         super.onStop();
         finish();
-    }
+    } */
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(getDestroyed);
+    }
     /*Get's called if anything (mostly dialogs) get's over the activity, then it closes all dialogs */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (!hasFocus) {
-            //Toast.makeText(getApplicationContext(), "Can't take focus from this window!!", Toast.LENGTH_SHORT).show();
             // Close every kind of system dialog
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
