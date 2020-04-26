@@ -4,5 +4,13 @@
     <string name="exitButton">Exit Exam</string>
     <string name="browsermsg">It will become a single-tab browser where you will actually give exam</string>
     <string name="loginmsg">This will become login screen. On pressing the button to start exam, you will be asked for screen pinning permission. Please allow it or you won\'t be able to take the exam.</string>
-
+    <string name="tab_text_1">Page 1</string>
+    <string name="tab_text_2">Page 2</string>
+    <string name="tab_text_3">Page 3</string>
+    <string name="instruction_title"> <big><b>Please Read all the Instructions</b></big></string>
+    <string name="instructions">
+        <li>1) Item 1</li>\n
+        <li>2) Item 2</li>\n
+        <li>3) Item 3</li>\n
+    </string>
 </resources>

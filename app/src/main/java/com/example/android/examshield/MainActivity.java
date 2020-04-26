@@ -7,47 +7,58 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView msgWindow;
-    private Button startExamButton;
+    private FloatingActionButton startExamButton;
     public ClipboardManager clipboardManager;
     private PolicyManager policyManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD); //disables lock screen
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD); //disables lock screen
         setContentView(R.layout.activity_main);
         policyManager = new PolicyManager(this);
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("clipboard data ", "");
         clipboardManager.setPrimaryClip(clip);
-        msgWindow = findViewById(R.id.loginmsg);
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
         startExamButton = findViewById(R.id.startExamButton);
-
-        Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
-
+        if (!policyManager.isAdminActive()) {
+            Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+        }
         startExamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (policyManager.isAdminActive()) {
-                    Intent intent = new Intent(MainActivity.this, ForecastActivity.class);
-                    startActivity(intent);
-                    finish();
-
+                activateAdmin();
+                if (NetworkState.connectionAvailable(getApplicationContext())) {
+                    if (policyManager.isAdminActive()) {
+                        Intent intent = new Intent(MainActivity.this, ForecastActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Internet Inactive. Please connect to internet.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        activateAdmin();
     }
 
     @Override
