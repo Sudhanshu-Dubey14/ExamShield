@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton startExamButton;
     public ClipboardManager clipboardManager;
     private PolicyManager policyManager;
+    private AudioManager audiomanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("clipboard data ", "");
         clipboardManager.setPrimaryClip(clip);
-
+        audiomanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        assert audiomanager != null;
+        audiomanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         startExamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                audiomanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 activateAdmin();
                 if (NetworkState.connectionAvailable(getApplicationContext())) {
                     if (policyManager.isAdminActive()) {
