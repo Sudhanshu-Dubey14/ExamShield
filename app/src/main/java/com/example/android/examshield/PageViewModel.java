@@ -16,9 +16,11 @@ public class PageViewModel extends ViewModel {
         @Override
         public String apply(Integer input) {
             if (input == 1) {
-                return mcontext.getText(R.string.instructions).toString();
+                return mcontext.getText(R.string.instructions_page1).toString();
+            } else if (input == 2) {
+                return mcontext.getText(R.string.instructions_page2).toString();
             } else {
-                return "Not one";
+                return "Invalid Tab";
             }
         }
     });
