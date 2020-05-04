@@ -20,7 +20,6 @@
             android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +36,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".LockedExamActivity" />
+        <activity android:name=".LockedExamActivity">
+            <intent-filter>
+                <action android:name="NotPinned" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ForecastActivity" />
 
