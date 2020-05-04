@@ -1,11 +1,13 @@
 package com.example.android.examshield;
 
+import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -27,6 +29,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //for geting do not disturb  to mute mobile
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !notificationManager.isNotificationPolicyAccessGranted()) {
+
+            Intent intent = new Intent(
+                    android.provider.Settings
+                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+
+            startActivity(intent);
+        }
+
+
         policyManager = new PolicyManager(this);
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("clipboard data ", "");
@@ -39,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+
+
 
         startExamButton = findViewById(R.id.startExamButton);
         if (!policyManager.isAdminActive()) {
