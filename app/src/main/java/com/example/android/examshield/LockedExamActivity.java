@@ -23,7 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import android.support.v7.app.AppCompatActivity;
 //import for browser end
@@ -89,9 +91,13 @@ public class LockedExamActivity extends AppCompatActivity {
         }
 
         webView.setWebViewClient(new MyWebViewClient());
-        Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        webView.loadUrl(url);
+
+        Intent intent =getIntent();
+        String url=intent.getStringExtra("url");
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("X-SafeExamBrowser-RequsetHash","81aad4ab9df");
+        webView.loadUrl(url,headers);
+
     }
 
     /*
