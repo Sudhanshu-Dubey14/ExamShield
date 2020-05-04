@@ -8,6 +8,6 @@ public class NetworkState {
     public static boolean connectionAvailable(Context context){
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager.getActiveNetworkInfo() !=null;
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 }

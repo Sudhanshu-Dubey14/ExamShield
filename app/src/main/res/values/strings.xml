@@ -1,7 +1,26 @@
 <resources>
     <string name="app_name">ExamShield</string>
     <string name="startExamButton">Start Exam</string>
-    <string name="exitButton">Exit Exam</string>
-    <string name="browsermsg">It will become a single-tab browser where you will actually give exam</string>
-    <string name="loginmsg">This will become login screen. On pressing the button to start exam, you will be asked for screen pinning permission. Please allow it or you won\'t be able to take the exam.</string>
+    <string name="tab_text_1">Page 1</string>
+    <string name="tab_text_2">Page 2</string>
+    <string name="instruction_title"> <big><b>Please Read All the Instructions Before Attempting Exam</b></big></string>
+    <string name="instructions_page1"> This app is made to enable the students to give exams from their
+        own smartphone in a secure way.\n
+        <b>Permissions Required:</b> The following permissions are required for the app to work:\n\n
+        <li>1) Device Admin</li>\n
+        <li>2) Screen Pinning</li>\n\n
+        After allowing the above permissions, you will be taken to the exam hosted on your exam server.\n
+        \nYou may be asked to login before you are able to take exam. The specific rule for exam and it\'s
+        type will be decided by your examiner. This app is just a means to help your take the exam
+        without any unfair means being used.
+    </string>
+    <string name="instructions_page2">
+        <b><i>Please do not attempt to exit the Screen Pinning before submitting the exam as that
+            will result in immediate cancellation of your exam.</i></b>\n\n
+
+        <b>How to Exit the app:</b>\n\n
+        After successfully submitting your exam, you can exit the exam by exiting the Screen Pinning.
+        This can be done by the method specified by your phone. You can find this method by pressing
+        the Home button.
+    </string>
 </resources>

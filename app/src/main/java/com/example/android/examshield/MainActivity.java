@@ -5,46 +5,63 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView msgWindow;
-    private Button startExamButton;
+    private FloatingActionButton startExamButton;
     public ClipboardManager clipboardManager;
     private PolicyManager policyManager;
+    private AudioManager audiomanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD); //disables lock screen
         setContentView(R.layout.activity_main);
         policyManager = new PolicyManager(this);
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("clipboard data ", "");
         clipboardManager.setPrimaryClip(clip);
-        msgWindow = findViewById(R.id.loginmsg);
+        audiomanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        assert audiomanager != null;
+        audiomanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
         startExamButton = findViewById(R.id.startExamButton);
+        if (!policyManager.isAdminActive()) {
+            Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+        }
         startExamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (policyManager.isAdminActive()) {
-                    Intent intent = new Intent(MainActivity.this, LockedExamActivity.class);
-                    startLockTask();
-                    startActivity(intent);
-                    finish();
+                audiomanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                activateAdmin();
+                if (NetworkState.connectionAvailable(getApplicationContext())) {
+                    if (policyManager.isAdminActive()) {
+                        Intent intent = new Intent(MainActivity.this, ForecastActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please enable admin to give exam.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Internet Inactive. Please connect to internet.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        activateAdmin();
     }
 
     @Override
