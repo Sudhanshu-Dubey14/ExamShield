@@ -96,6 +96,7 @@ public class LockedExamActivity extends AppCompatActivity {
         String url=intent.getStringExtra("url");
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("X-SafeExamBrowser-RequsetHash","81aad4ab9df");
+        webView.getSettings().setUserAgentString("SEB");
         webView.loadUrl(url,headers);
 
     }
