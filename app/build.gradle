@@ -33,6 +33,8 @@ android {
         exclude 'META-INF/androidx.appcompat_appcompat.version'
         exclude 'META-INF/androidx.viewpager_viewpager.version'
         exclude 'META-INF/androidx.cursoradapter_cursoradapter.version'
+        exclude 'META-INF/androidx.cardview_cardview.version'
+        exclude 'META-INF/androidx.lifecycle_lifecycle-runtime.version'
     }
 }
 
